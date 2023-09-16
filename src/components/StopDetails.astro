@@ -1,6 +1,7 @@
 ---
 import { getTransitData } from "../utils/api";
 
+// hard coded
 const data = await getTransitData('10616');
 console.log(data["stop-schedule"].stop.name);
 ---
