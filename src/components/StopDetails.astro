@@ -1,0 +1,10 @@
+---
+import { getTransitData } from "../utils/api";
+
+const data = await getTransitData('10616');
+console.log(data["stop-schedule"].stop.name);
+---
+
+<div>
+  <h1>{JSON.stringify(data["stop-schedule"]["route-schedules"].map(routeSchedule => routeSchedule.route.name))}</h1>
+</div>
