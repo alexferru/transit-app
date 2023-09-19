@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { getTransitData } from "../utils/api";
+import { getRouteSchedulesForStop } from "../utils/api";
 
 const SearchForm = () => {
   const [stopId, setStopId] = useState("");
-  const [data, setData] = useState(null);
+  const [routeSchedules, setRouteSchedules] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -21,14 +21,11 @@ const SearchForm = () => {
     }
 
     try {
-      const fetchedData = await getTransitData(trimmedStopId);
-      if (fetchedData.error) {
-        throw new Error(fetchedData.error.message);
-      }
-      setData(fetchedData);
+      const fetchedData = await getRouteSchedulesForStop(trimmedStopId);
+      setRouteSchedules(fetchedData);
     } catch (err) {
-      setError(`Error fetching transit data: ${err.message}`);
-      setData(null);
+      setError(`Error fetching route schedules: ${err.message}`);
+      setRouteSchedules(null);
     } finally {
       setLoading(false);
     }
@@ -48,16 +45,28 @@ const SearchForm = () => {
 
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      {data && (
+
+      {routeSchedules && (
         <div>
-          <h1>{data["stop-schedule"].stop.name}</h1>
-          <h2>
-            {JSON.stringify(
-              data["stop-schedule"]["route-schedules"].map(
-                (routeSchedule) => routeSchedule.route.name
-              )
-            )}
-          </h2>
+          {routeSchedules.map((routeSchedule, index) => (
+            <div key={index}>
+              <h2>Route: {routeSchedule.route.name}</h2>
+
+              <h3>Scheduled Stops:</h3>
+              <ul>
+                {routeSchedule["scheduled-stops"].map(
+                  (scheduledStop, sIndex) => (
+                    <li key={sIndex}>
+                      Arrival:{" "}
+                      {new Date(
+                        scheduledStop.times.arrival.scheduled
+                      ).toLocaleTimeString()}{" "}
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          ))}
         </div>
       )}
     </div>
