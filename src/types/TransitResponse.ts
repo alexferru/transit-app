@@ -1,67 +1,67 @@
 export type TransitResponse = {
   "stop-schedule": StopSchedule;
-  "query-time":    Date;
-}
+  "query-time": Date;
+};
 
 export type StopSchedule = {
-  stop:              Stop;
+  stop: Stop;
   "route-schedules": RouteSchedule[];
-}
+};
 
 export type RouteSchedule = {
-  route:             Route;
+  route: Route;
   "scheduled-stops": ScheduledStop[];
-}
+};
 
 export type Route = {
-  key:             number;
-  number:          number;
-  name:            string;
+  key: number | string;
+  number: number;
+  name: string;
   "customer-type": string;
-  coverage:        string;
-  "badge-label":   number;
-  "badge-style":   BadgeStyle;
-}
+  coverage: string;
+  "badge-label": number;
+  "badge-style": BadgeStyle;
+};
 
 export type BadgeStyle = {
-  "class-names":      ClassNames;
+  "class-names": ClassNames;
   "background-color": string;
-  "border-color":     string;
-  color:              string;
-}
+  "border-color": string;
+  color: string;
+};
 
 export type ClassNames = {
   "class-name": string[];
-}
+};
 
 export type ScheduledStop = {
-  key:       string;
+  key: string;
   cancelled: string;
-  times:     Times;
-  variant:   Variant;
-  bus:       Bus;
-}
+  times: Times;
+  variant: Variant;
+  bus: Bus;
+};
 
 export type Bus = {
-  key:         number;
+  key: number;
   "bike-rack": string;
-  wifi:        string;
-}
+  wifi: string;
+};
 
 export type Times = {
-  arrival:   Arrival;
+  arrival: Arrival;
   departure: Arrival;
-}
+};
 
 export type Arrival = {
   scheduled: Date;
   estimated: Date;
-}
+};
 
 export type Variant = {
-  key:  Key;
+  key: Key;
   name: Name;
-}
+};
 
 export enum Key {
   The160B = "16-0-B",
@@ -74,34 +74,34 @@ export enum Name {
 }
 
 export type Stop = {
-  key:            number;
-  name:           string;
-  number:         number;
-  direction:      string;
-  side:           string;
-  street:         Street;
+  key: number;
+  name: string;
+  number: number;
+  direction: string;
+  side: string;
+  street: Street;
   "cross-street": Street;
-  centre:         Centre;
-}
+  centre: Centre;
+};
 
 export type Centre = {
-  utm:        Utm;
+  utm: Utm;
   geographic: Geographic;
-}
+};
 
 export type Geographic = {
-  latitude:  string;
+  latitude: string;
   longitude: string;
-}
+};
 
 export type Utm = {
   zone: string;
-  x:    number;
-  y:    number;
-}
+  x: number;
+  y: number;
+};
 
 export type Street = {
-  key:  number;
+  key: number;
   name: string;
   type: string;
-}
+};

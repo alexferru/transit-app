@@ -22,6 +22,7 @@ const SearchForm = () => {
 
     try {
       const fetchedData = await getRouteSchedulesForStop(trimmedStopId);
+      console.log("Fetched Data:", fetchedData);
       setRouteSchedules(fetchedData);
     } catch (err) {
       setError(`Error fetching route schedules: ${err.message}`);
@@ -50,17 +51,17 @@ const SearchForm = () => {
         <div>
           {routeSchedules.map((routeSchedule, index) => (
             <div key={index}>
-              <h2>Route: {routeSchedule.route.name}</h2>
+              <h2>Route: {routeSchedule.route.number}</h2>
 
               <h3>Scheduled Stops:</h3>
               <ul>
                 {routeSchedule["scheduled-stops"].map(
                   (scheduledStop, sIndex) => (
                     <li key={sIndex}>
-                      Arrival:{" "}
+                      Variant: {scheduledStop.variant.name} - Arrival:{" "}
                       {new Date(
                         scheduledStop.times.arrival.scheduled
-                      ).toLocaleTimeString()}{" "}
+                      ).toLocaleTimeString()}
                     </li>
                   )
                 )}
